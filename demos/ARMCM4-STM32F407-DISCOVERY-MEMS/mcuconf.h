@@ -204,6 +204,16 @@
 #define STM32_PWM_TIM9_IRQ_PRIORITY         7
 
 /*
+ * QEI driver system settings.
+ */
+#define STM32_QEI_USE_TIM1                  FALSE
+#define STM32_QEI_USE_TIM2                  FALSE
+#define STM32_QEI_USE_TIM3                  TRUE
+#define STM32_QEI_USE_TIM4                  FALSE
+#define STM32_QEI_USE_TIM5                  FALSE
+#define STM32_QEI_USE_TIM8                  FALSE
+
+/*
  * SERIAL driver system settings.
  */
 #define STM32_SERIAL_USE_USART1             FALSE

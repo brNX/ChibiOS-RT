@@ -46,6 +46,7 @@ static void cmd_mem(BaseSequentialStream *chp, int argc, char *argv[]) {
   chprintf(chp, "core free memory : %u bytes\r\n", chCoreStatus());
   chprintf(chp, "heap fragments   : %u\r\n", n);
   chprintf(chp, "heap free total  : %u bytes\r\n", size);
+  chprintf(chp, "qei ticks : %d \r\n", qeiUpdate(&QEID3));
 }
 
 static void cmd_threads(BaseSequentialStream *chp, int argc, char *argv[]) {
@@ -216,6 +217,34 @@ static msg_t Thread1(void *arg) {
 }
 
 /*===========================================================================*/
+/* QEI related.                                                    */
+/*===========================================================================*/
+
+void initQEI(void)
+{
+	//delay_send = 0;
+
+	static QEIConfig qeicfg = {
+			QEI_MODE_QUADRATURE,
+			QEI_BOTH_EDGES,
+			QEI_DIRINV_FALSE,
+	};
+	static QEIConfig qeicfg_inv = {
+			QEI_MODE_QUADRATURE,
+			QEI_BOTH_EDGES,
+			QEI_DIRINV_TRUE,
+	};
+
+	/*
+	 * Activates left QEI.
+	 */
+	qeiStart(&QEID3, &qeicfg);
+	qeiEnable(&QEID3);
+	palSetPadMode(GPIOB, 4, PAL_MODE_ALTERNATE(2));
+	palSetPadMode(GPIOB, 5, PAL_MODE_ALTERNATE(2));
+}
+
+/*===========================================================================*/
 /* Initialization and main thread.                                           */
 /*===========================================================================*/
 
@@ -239,6 +268,12 @@ int main(void) {
    * Shell manager initialization.
    */
   shellInit();
+  
+  /*
+   * Initializes QEI on PB4/PB5
+   */
+   initQEI();
+  
 
   /*
    * Initializes a serial-over-USB CDC driver.
