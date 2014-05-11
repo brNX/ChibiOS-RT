@@ -401,7 +401,7 @@
 #define STM32_CAN_MAX_FILTERS   28
 
 /* DAC attributes.*/
-#define STM32_HAS_DAC           FALSE
+#define STM32_HAS_DAC           TRUE
 
 #define STM32_HAS_DAC_CHN1          TRUE
 #define STM32_DAC_CHN1_DMA_MSK      (STM32_DMA_STREAM_ID_MSK(1, 5))
